@@ -1,0 +1,25 @@
+on: [push]
+
+jobs:
+  test_pack_help:
+    runs-on: ubuntu-latest
+    name: Pack Help
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Pack Help
+        id: help
+        uses: ./
+        with:
+          args: 'help'
+  test_pack_version:
+    runs-on: ubuntu-latest
+    name: Pack Version
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Pack Version
+        id: version
+        uses: ./
+        with:
+          args: 'version'
