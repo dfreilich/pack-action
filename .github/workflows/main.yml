@@ -1,5 +1,9 @@
 on: [push]
 
+env:
+  TEST_APP_PATH: ".github/workflows/test-app"
+  BUILDER: "paketobuildpacks/builder:tiny"
+
 jobs:
   test_pack_help:
     runs-on: ubuntu-latest
@@ -8,7 +12,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Pack Help
-        id: help
         uses: ./
         with:
           args: 'help'
@@ -19,7 +22,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Pack Version
-        id: version
         uses: ./
         with:
           args: 'version'
+  test_pack_build:
+    runs-on: ubuntu-latest
+    name: Pack Build
+    steps:
+      - name: Checkout Action
+        uses: actions/checkout@v2
+      - name: Pack Build
+        uses: ./
+        with:
+          args: 'build test --path ${{ env.TEST_APP_PATH }} --builder ${{ env.BUILDER }}'
