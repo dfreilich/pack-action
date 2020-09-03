@@ -39,4 +39,4 @@ jobs:
         uses: ./
         with:
           args: 'build'
-          build-args: 'localhost:5000/test --path ${{ env.TEST_APP_PATH }} --builder ${{ env.BUILDER }}'
+          build-args: 'localhost:5000/test --builder ${{ env.BUILDER }} --path ${{ env.TEST_APP_PATH }}'
