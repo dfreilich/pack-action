@@ -29,13 +29,21 @@ jobs:
           args: 'version'
   test_pack_build:
     runs-on: ubuntu-latest
-    name: Pack Build
+    name: Pack Local Build
     steps:
       - name: Checkout Action
         uses: actions/checkout@v2
       - name: Run local registry
-        run: docker run -d -p 5000:5000 registry:2
+        run: docker run -d -p 5000:5000 --name registry registry:2
       - name: Pack Build
         uses: ./
         with:
           args: 'build localhost:5000/test --builder ${{ env.BUILDER }} --path ${{ env.TEST_APP_PATH }}'
+      - name: Test App
+        run: |
+          docker run -d -p 8080:8080 --name testapp localhost:5000/test
+          curl localhost:8080
+      - name: Clean Up
+        run: |
+          docker container stop testapp
+          docker container stop registry
