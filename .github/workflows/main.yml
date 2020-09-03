@@ -1,3 +1,5 @@
+name: test
+
 on: [push]
 
 env:
@@ -31,7 +33,9 @@ jobs:
     steps:
       - name: Checkout Action
         uses: actions/checkout@v2
+      - name: Run local registry
+        run: docker run -d -p 5000:5000 registry:2
       - name: Pack Build
         uses: ./
         with:
-          args: 'build test --path ${{ env.TEST_APP_PATH }} --builder ${{ env.BUILDER }}'
+          args: 'build localhost:5000/test --path ${{ env.TEST_APP_PATH }} --builder ${{ env.BUILDER }}'
