@@ -1,5 +1,5 @@
 # action.yml
-name: 'Pack'
+name: 'Pack Docker Action'
 description: 'Run the Cloud Native Buildpacks Pack CLI'
 author: 'dfreilich'
 
