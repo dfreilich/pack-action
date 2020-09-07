@@ -5,7 +5,6 @@ on: [push]
 env:
   TEST_APP_PATH: ".github/workflows/test-app"
   BUILDER: "paketobuildpacks/builder:tiny"
-  TEST_RUN_IMG: "paketobuildpacks/run:base-cnb"
 
 jobs:
   help:
@@ -37,19 +36,19 @@ jobs:
       - name: Pack Build
         uses: ./
         with:
-          args: 'build test --builder ${{ env.BUILDER }} --path ${{ env.TEST_APP_PATH }}'
+          args: 'build test_img --builder ${{ env.BUILDER }} --path ${{ env.TEST_APP_PATH }}'
       - name: Test App
         run: |
-          docker run -d -p 8080:8080 --name testapp test
+          docker run -d -p 8080:8080 --name testapp test_img
           curl localhost:8080
       - name: Pack Rebase
         uses: ./
         with:
-          args: 'rebase test --run-image ${{ env.TEST_RUN_IMG }}'
+          args: 'rebase test_img'
       - name: Inspect Image
         uses: ./
         with:
-          args: 'inspect-image test'
+          args: 'inspect-image test_img'
       - name: Clean Up
         run: |
           docker container stop testapp
