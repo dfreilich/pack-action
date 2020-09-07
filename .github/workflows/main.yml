@@ -27,7 +27,7 @@ jobs:
         uses: ./
         with:
           args: 'version'
-  local_build:
+  local_build_registry:
     runs-on: ubuntu-latest
     name: Pack Local Build
     steps:
@@ -47,21 +47,20 @@ jobs:
         run: |
           docker container stop testapp
           docker container stop registry
-  remote_build:
+  local_build_no_registry:
     runs-on: ubuntu-latest
-    name: Pack Remote Build
+    name: Pack Local Build no registry
     steps:
       - name: Checkout Action
         uses: actions/checkout@v2
       - name: Pack Build
         uses: ./
         with:
-          args: 'build localhost:5000/test --builder ${{ env.BUILDER }} --path ${{ env.TEST_APP_PATH }}'
+          args: 'build test --builder ${{ env.BUILDER }} --path ${{ env.TEST_APP_PATH }}'
       - name: Test App
         run: |
-          docker run -d -p 8080:8080 --name testapp localhost:5000/test
+          docker run -d -p 8080:8080 --name testapp test
           curl localhost:8080
       - name: Clean Up
         run: |
           docker container stop testapp
-          docker container stop registry
