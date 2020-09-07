@@ -1,19 +1,8 @@
 # action.yml
-name: 'Pack'
+name: 'Pack Docker Action'
 description: 'Run the Cloud Native Buildpacks Pack CLI'
 author: 'dfreilich'
-inputs:
-  args:
-    description: 'Arguments to pass to Pack CLI'
-    required: true
-  build-args:
-    description: 'Arguments to pass to Pack CLI'
-    required: false
-    default: ''
 
 runs:
   using: 'docker'
   image: 'docker://buildpacksio/pack'
-  args:
-    - ${{ inputs.args }}
-    - ${{ inputs.build-args}}

@@ -1,13 +1,13 @@
 name: test
 
-on: [push]
+on: [push, pull_request]
 
 env:
   TEST_APP_PATH: ".github/workflows/test-app"
   BUILDER: "paketobuildpacks/builder:tiny"
 
 jobs:
-  test_pack_help:
+  help:
     runs-on: ubuntu-latest
     name: Pack Help
     steps:
@@ -17,7 +17,7 @@ jobs:
         uses: ./
         with:
           args: 'help'
-  test_pack_version:
+  version:
     runs-on: ubuntu-latest
     name: Pack Version
     steps:
@@ -27,16 +27,28 @@ jobs:
         uses: ./
         with:
           args: 'version'
-  test_pack_build:
+  local_build:
     runs-on: ubuntu-latest
-    name: Pack Build
+    name: Pack Local Build
     steps:
       - name: Checkout Action
         uses: actions/checkout@v2
-      - name: Run local registry
-        run: docker run -d -p 5000:5000 registry:2
       - name: Pack Build
         uses: ./
         with:
-          args: 'build'
-          build-args: 'localhost:5000/test --builder ${{ env.BUILDER }} --path ${{ env.TEST_APP_PATH }}'
+          args: 'build test_img --builder ${{ env.BUILDER }} --path ${{ env.TEST_APP_PATH }}'
+      - name: Test App
+        run: |
+          docker run -d -p 8080:8080 --name testapp test_img
+          curl localhost:8080
+      - name: Pack Rebase
+        uses: ./
+        with:
+          args: 'rebase test_img'
+      - name: Inspect Image
+        uses: ./
+        with:
+          args: 'inspect-image test_img'
+      - name: Clean Up
+        run: |
+          docker container stop testapp
