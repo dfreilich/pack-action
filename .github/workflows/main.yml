@@ -5,6 +5,7 @@ on: [push]
 env:
   TEST_APP_PATH: ".github/workflows/test-app"
   BUILDER: "paketobuildpacks/builder:tiny"
+  TEST_RUN_IMG: "paketobuildpacks/run:base-cnb"
 
 jobs:
   help:
@@ -27,29 +28,9 @@ jobs:
         uses: ./
         with:
           args: 'version'
-  local_build_registry:
+  local_build:
     runs-on: ubuntu-latest
     name: Pack Local Build
-    steps:
-      - name: Checkout Action
-        uses: actions/checkout@v2
-      - name: Run local registry
-        run: docker run -d -p 5000:5000 --name registry registry:2
-      - name: Pack Build
-        uses: ./
-        with:
-          args: 'build localhost:5000/test --builder ${{ env.BUILDER }} --path ${{ env.TEST_APP_PATH }}'
-      - name: Test App
-        run: |
-          docker run -d -p 8080:8080 --name testapp localhost:5000/test
-          curl localhost:8080
-      - name: Clean Up
-        run: |
-          docker container stop testapp
-          docker container stop registry
-  local_build_no_registry:
-    runs-on: ubuntu-latest
-    name: Pack Local Build no registry
     steps:
       - name: Checkout Action
         uses: actions/checkout@v2
@@ -61,6 +42,14 @@ jobs:
         run: |
           docker run -d -p 8080:8080 --name testapp test
           curl localhost:8080
+      - name: Pack Rebase
+        uses: ./
+        with:
+          args: 'rebase test --run-image ${{ env.TEST_RUN_IMG }}'
+      - name: Inspect Image
+        uses: ./
+        with:
+          args: 'inspect-image test'
       - name: Clean Up
         run: |
           docker container stop testapp
