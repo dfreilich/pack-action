@@ -65,6 +65,8 @@ jobs:
           username: ${{ env.USERNAME }}
           logout: false
           password: ${{ secrets.DOCKER_TOKEN }}
+      - name: test
+        run: 'cat $HOME/.docker/config.json'
       - name: Pack Remote Build
         uses: ./
         with:
