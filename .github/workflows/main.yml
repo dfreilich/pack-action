@@ -132,6 +132,8 @@ jobs:
           logout: false
           password: ${{ secrets.GH_PACKAGES_PAT }}
           registry: ${{ env.REGISTRY }}
+      - name: Test
+        run: 'docker pull ${{ env.BUILDER }}'
       - name: Pack Local Build
         uses: ./
         with:
