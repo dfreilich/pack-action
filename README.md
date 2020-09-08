@@ -1,7 +1,7 @@
 ![test](https://github.com/dfreilich/pack-action/workflows/test/badge.svg)
 
-# pack-action
-This action uses the [Pack CLI](https://github.com/buildpacks/pack) (a product of the [Cloud Native Buildpacks project](https://buildpacks.io)) to build applications and associated artifacts. For more about pack concepts, see the [pack docs](https://buildpacks.io/docs). For usage specific documentation, see the [Pack CLI docs](https://buildpacks.io/docs/reference/pack/pack/).
+# Pack Github Action
+This Github Action uses the [Pack CLI](https://github.com/buildpacks/pack) (a product of the [Cloud Native Buildpacks project](https://buildpacks.io)) to build applications and associated artifacts, without a Dockerfile. For more about pack concepts, see the [pack docs](https://buildpacks.io/docs). For `pack` usage specific documentation, see the [Pack CLI docs](https://buildpacks.io/docs/reference/pack/pack/).
 
 ## Usage
 ### Help
@@ -24,7 +24,7 @@ jobs:
   local_build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Action
+      - name: Checkout
         uses: actions/checkout@v2
       - name: Pack Build
         uses: dfreilich/pack-action@v1
@@ -46,7 +46,7 @@ on your local machine.
       USERNAME: '<SOMETHING>'
       IMG_NAME: '<SOME_IMG>'
     steps:
-      - name: Checkout Action
+      - name: Checkout
         uses: actions/checkout@v2
       - name: Set App Name
         run: 'echo "::set-env name=IMG_NAME::$(echo ${USERNAME})/$(echo ${IMG_NAME})"'
@@ -67,14 +67,14 @@ If you are publishing to a registry that is not Docker Hub, you can also add in 
       IMG_NAME: '<IMAGE>'
       REGISTRY: '<REGISTRY: ex. ghcr.io>'
     steps:
-      - name: Checkout Action
+      - name: Checkout
         uses: actions/checkout@v2
       - name: Set App Name
         run: 'echo "::set-env name=IMG_NAME::$(echo ${REGISTRY})/$(echo ${USERNAME})/$(echo ${IMG_NAME})"'
       - name: Pack Remote Build
         uses: ./
         with:
-          args: 'build ${{ env.IMG_NAME }} --builder ${{ env.BUILDER }} --path ${{ env.TEST_APP_PATH }} --publish'
+          args: 'build ${{ env.IMG_NAME }} --builder ${{ env.BUILDER }} --publish'
           username: ${{ env.USERNAME }}
           password: ${{ secrets.<GH_PACKAGES TOKEN> }}
           registry: ${{ env.REGISTRY }}
@@ -85,7 +85,7 @@ For more examples, see the [test workflows](.github/workflows/main.yml).
 
 ## Inputs
 ### `args`
-**Required** The arguments to pass into pack. A list of available commands can be found [here](https://buildpacks.io/docs/reference/pack/pack/).
+**Required** The arguments to pass into `pack`. A list of available commands can be found [here](https://buildpacks.io/docs/reference/pack/pack/).
 
 ### `username`
 **Optional** Username used to log in to a Docker registry. If not set, then no login will occur.
