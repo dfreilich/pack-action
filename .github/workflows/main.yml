@@ -1,6 +1,6 @@
 name: test
 
-on: [push, pull_request]
+on: [push]
 
 env:
   TEST_APP_PATH: ".github/workflows/test-app"
@@ -117,6 +117,38 @@ jobs:
           username: ${{ env.USERNAME }}
           password: ${{ secrets.GH_PACKAGES_PAT }}
           registry: ${{ env.REGISTRY }}
+      - name: Clean Up
+        run: |
+          docker container stop testapp
+  local_with_secure_builder:
+    runs-on: ubuntu-latest
+    env:
+      USERNAME: 'dfreilich'
+      IMG_NAME: 'pack_action_test_img'
+      REGISTRY: 'ghcr.io'
+      BUILDER: 'ghcr.io/dfreilich/paketobuildpacks/builder:tiny'
+    steps:
+      - name: Checkout Action
+        uses: actions/checkout@v2
+      - name: Pack Remote Build
+        uses: ./
+        with:
+          args: 'build ${{ env.IMG_NAME }} --builder ${{ env.BUILDER }} --path ${{ env.TEST_APP_PATH }}'
+          username: ${{ env.USERNAME }}
+          password: ${{ secrets.GH_PACKAGES_PAT }}
+          registry: ${{ env.REGISTRY }}
+      - name: Test App
+        run: |
+          docker run -d -p 8080:8080 --name testapp ${{ env.IMG_NAME }}
+          curl localhost:8080
+      - name: Pack Rebase
+        uses: ./
+        with:
+          args: 'rebase ${{ env.IMG_NAME }}'
+      - name: Inspect Image
+        uses: ./
+        with:
+          args: 'inspect-image ${{ env.IMG_NAME }}'
       - name: Clean Up
         run: |
           docker container stop testapp
