@@ -63,6 +63,7 @@ jobs:
         uses: docker/login-action@v1
         with:
           username: ${{ env.USERNAME }}
+          logout: false
           password: ${{ secrets.DOCKER_TOKEN }}
       - name: Pack Remote Build
         uses: ./
@@ -94,6 +95,7 @@ jobs:
         uses: docker/login-action@v1
         with:
           username: ${{ env.USERNAME }}
+          logout: false
           password: ${{ secrets.GH_PACKAGES_PAT }}
           registry: ${{ env.REGISTRY }}
       - name: Pack Remote Build
@@ -127,6 +129,7 @@ jobs:
         uses: docker/login-action@v1
         with:
           username: ${{ env.USERNAME }}
+          logout: false
           password: ${{ secrets.GH_PACKAGES_PAT }}
           registry: ${{ env.REGISTRY }}
       - name: Pack Local Build
