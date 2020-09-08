@@ -67,7 +67,6 @@ jobs:
           password: ${{ secrets.DOCKER_TOKEN }}
       - name: Test App
         run: |
-          echo ${{ secrets.DOCKER_TOKEN }} | docker login -u ${{ env.USERNAME }} --password-stdin
           docker run -d -p 8080:8080 --name testapp ${{ env.IMG_NAME }}
           curl localhost:8080
       - name: Pack Rebase
