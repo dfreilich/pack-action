@@ -1,4 +1,8 @@
 #!/bin/sh
 
-cat $HOME/.docker/config.json
+echo $HOME
+ls -al $HOME/.docker
+cat ~/.docker/config.json
+cat /home/runner/.docker/config.json
+
 eval "pack ${INPUT_ARGS}"
