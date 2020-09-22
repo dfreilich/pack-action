@@ -9,6 +9,6 @@ branding:
 runs:
   using: 'docker'
   image: 'docker://buildpacksio/pack'
-#  entrypoint: "./entrypoint.sh"
-  args:
-    - ${{ inputs.args }}
+  entrypoint: "./entrypoint.sh"
+#  args:
+#    - ${{ inputs.args }}
