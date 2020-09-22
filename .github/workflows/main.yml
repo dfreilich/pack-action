@@ -34,8 +34,8 @@ jobs:
           args: 'build test_img --builder ${{ env.BUILDER }} --path ${{ env.TEST_APP_PATH }}'
       - name: Test App
         run: |
-          docker run -d -p 8080:8080 --name testapp test_img
-          curl localhost:8080
+          docker run -d -p 9999:8080 --name testapp test_img
+          curl localhost:9999
       - name: Pack Rebase
         uses: ./
         with:
