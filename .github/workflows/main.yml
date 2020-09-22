@@ -10,10 +10,6 @@ env:
   REGISTRY: 'ghcr.io'
 
 jobs:
-  container:
-    image: docker/compose
-    volumes:
-      - /home/runner:/var/www
   help:
     runs-on: ubuntu-latest
     steps:
@@ -57,6 +53,10 @@ jobs:
         run: |
           docker container stop testapp
   dockerhub_remote_build:
+    container:
+      image: docker/compose
+      volumes:
+        - /home/runner:/var/www
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -97,6 +97,10 @@ jobs:
           docker container stop testapp
   github_registry_remote_build:
     runs-on: ubuntu-latest
+    container:
+      image: docker/compose
+      volumes:
+        - /home/runner:/var/www
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -126,6 +130,10 @@ jobs:
           docker container stop testapp
   local_with_secure_builder:
     runs-on: ubuntu-latest
+    container:
+      image: docker/compose
+      volumes:
+        - /home/runner:/var/www
     env:
       BUILDER: 'ghcr.io/dfreilich/paketobuildpacks/builder:tiny'
     steps:
