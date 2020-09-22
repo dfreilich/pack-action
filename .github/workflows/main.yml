@@ -12,22 +12,28 @@ env:
 jobs:
   version:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        pack: ['./', 'dfreilich/pack-action@v0.0.1', 'dfreilich/pack-action@v0.0.2']
     steps:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Pack Version
-        uses: ./
+        uses: ${{ matrix.pack }}
         with:
           args: 'version'
       - name: Test curl
         run: curl --version
   local_build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        pack: ['./', 'dfreilich/pack-action@v0.0.1', 'dfreilich/pack-action@v0.0.2']
     steps:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Pack Build
-        uses: ./
+        uses: ${{ matrix.pack }}
         with:
           args: 'build test_img --builder ${{ env.BUILDER }} --path ${{ env.TEST_APP_PATH }}'
       - name: Test App
@@ -36,22 +42,25 @@ jobs:
           docker run -d -p 9999:8080 --name testapp test_img
           curl localhost:9999
       - name: Pack Rebase
-        uses: ./
+        uses: ${{ matrix.pack }}
         with:
           args: 'rebase test_img'
       - name: Inspect Image
-        uses: ./
+        uses: ${{ matrix.pack }}
         with:
           args: 'inspect-image test_img'
       - name: Clean Up
         run: |
           docker container stop testapp
   dockerhub_remote_build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        pack: ['./', 'dfreilich/pack-action@v0.0.1', 'dfreilich/pack-action@v0.0.2']
     container:
       image: docker:stable
       volumes:
         - /home/runner:/var/www
-    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -64,19 +73,22 @@ jobs:
           logout: false
           password: ${{ secrets.DOCKER_TOKEN }}
       - name: Pack Remote Build
-        uses: ./
+        uses: ${{ matrix.pack }}
         with:
           args: 'build ${{ env.IMG_NAME }} --builder ${{ env.BUILDER }} --path ${{ env.TEST_APP_PATH }} --publish'
       - name: Pack Rebase
-        uses: ./
+        uses: ${{ matrix.pack }}
         with:
           args: 'rebase ${{ env.IMG_NAME }}'
       - name: Inspect Image
-        uses: ./
+        uses: ${{ matrix.pack }}
         with:
           args: 'inspect-image ${{ env.IMG_NAME }}'
   github_registry_remote_build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        pack: ['./', 'dfreilich/pack-action@v0.0.1', 'dfreilich/pack-action@v0.0.2']
     container:
       image: docker:stable
       volumes:
@@ -89,19 +101,22 @@ jobs:
       - name: Login to Github Registry
         run: 'echo ${{ secrets.GH_PACKAGES_PAT }} | docker login ${{ env.REGISTRY }} -u ${{ env.USERNAME }} --password-stdin'
       - name: Pack Remote Build
-        uses: ./
+        uses: ${{ matrix.pack }}
         with:
           args: 'build ${{ env.IMG_NAME }} --builder ${{ env.BUILDER }} --path ${{ env.TEST_APP_PATH }} --publish'
       - name: Pack Rebase
-        uses: ./
+        uses: ${{ matrix.pack }}
         with:
           args: 'rebase ${{ env.IMG_NAME }}'
       - name: Inspect Image
-        uses: ./
+        uses: ${{ matrix.pack }}
         with:
           args: 'inspect-image ${{ env.IMG_NAME }}'
   local_with_secure_builder:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        pack: ['./', 'dfreilich/pack-action@v0.0.1', 'dfreilich/pack-action@v0.0.2']
     container:
       image: docker:stable
       volumes:
@@ -114,14 +129,14 @@ jobs:
       - name: Login to Github Registry
         run: 'echo ${{ secrets.GH_PACKAGES_PAT }} | docker login ${{ env.REGISTRY }} -u ${{ env.USERNAME }} --password-stdin'
       - name: Pack Local Build
-        uses: ./
+        uses: ${{ matrix.pack }}
         with:
           args: 'build ${{ env.IMG_NAME }} --builder ${{ env.BUILDER }} --path ${{ env.TEST_APP_PATH }}'
       - name: Pack Rebase
-        uses: ./
+        uses: ${{ matrix.pack }}
         with:
           args: 'rebase ${{ env.IMG_NAME }}'
       - name: Inspect Image
-        uses: ./
+        uses: ${{ matrix.pack }}
         with:
           args: 'inspect-image ${{ env.IMG_NAME }}'
