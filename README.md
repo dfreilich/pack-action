@@ -39,6 +39,7 @@ $ pack suggest-builders
 on your local machine.
 
 ### Remote Build
+I recommend using the [docker/login-action](https://github.com/docker/login-action) for authentication, to ensure that all edge cases are taken care of. Some examples of remote authentication are below:
 ```yaml
   dockerhub_remote_build:
     runs-on: ubuntu-latest
@@ -50,12 +51,15 @@ on your local machine.
         uses: actions/checkout@v2
       - name: Set App Name
         run: 'echo "::set-env name=IMG_NAME::$(echo ${USERNAME})/$(echo ${IMG_NAME})"'
+      - name: Login to Dockerhub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ env.USERNAME }}
+          password: ${{ secrets.DOCKER_TOKEN }}
       - name: Pack Remote Build
         uses: ./
         with:
           args: 'build ${{ env.IMG_NAME }} --builder paketobuildpacks/builder:full --publish'
-          username: ${{ env.USERNAME }}
-          password: ${{ secrets.<TOKEN> }}
 ```
 
 If you are publishing to a registry that is not Docker Hub, you can also add in an optional `registry` argument:
@@ -71,6 +75,12 @@ If you are publishing to a registry that is not Docker Hub, you can also add in 
         uses: actions/checkout@v2
       - name: Set App Name
         run: 'echo "::set-env name=IMG_NAME::$(echo ${REGISTRY})/$(echo ${USERNAME})/$(echo ${IMG_NAME})"'
+      - name: Login to Github Registry
+        uses: docker/login-action@v1
+        with:
+          username: ${{ env.USERNAME }}
+          password: ${{ secrets.GH_PACKAGES_PAT }}
+          registry: ${{ env.REGISTRY }}
       - name: Pack Remote Build
         uses: ./
         with:

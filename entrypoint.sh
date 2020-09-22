@@ -1,6 +1,8 @@
 #!/bin/sh
 
-if [ -n "${INPUT_USERNAME}" ] && [ -n "${INPUT_PASSWORD}" ]; then
-  echo "${INPUT_PASSWORD}" | docker login -u "${INPUT_USERNAME}" --password-stdin "${INPUT_REGISTRY}"
-fi
+cat ~/.docker/config.json
+cat /var/www/.docker/config.json
+cp /var/www/.docker/config.json ~/.docker/config.json
+cat ~/.docker/config.json
+
 eval "pack ${INPUT_ARGS}"
