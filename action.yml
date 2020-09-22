@@ -8,8 +8,7 @@ branding:
 
 runs:
   using: 'docker'
-#  image: 'docker://buildpacksio/pack'
-  image: 'Dockerfile'
-  entrypoint: "./entrypoint.sh"
+  image: 'docker://buildpacksio/pack'
+#  entrypoint: "./entrypoint.sh"
   args:
     - ${{ inputs.args }}

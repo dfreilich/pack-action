@@ -10,6 +10,10 @@ env:
   REGISTRY: 'ghcr.io'
 
 jobs:
+  container:
+    image: docker/compose
+    volumes:
+      - /home/runner:/var/www
   help:
     runs-on: ubuntu-latest
     steps:
