@@ -45,7 +45,7 @@ jobs:
           docker container stop testapp
   dockerhub_remote_build:
     container:
-      image: docker:stable-dind
+      image: docker
       volumes:
         - /home/runner:/var/www
     runs-on: ubuntu-latest
