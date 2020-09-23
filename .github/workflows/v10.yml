@@ -16,8 +16,6 @@ jobs:
   version:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
       - name: Pack Version
         uses: dfreilich/pack-action@v1.0
         with:
