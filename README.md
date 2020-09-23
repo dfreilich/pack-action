@@ -13,7 +13,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Pack Help
-        uses: dfreilich/pack-action@v1
+        uses: dfreilich/pack-action@v0.0.3
         with:
           args: help
 ```
@@ -27,7 +27,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Pack Build
-        uses: dfreilich/pack-action@v1
+        uses: dfreilich/pack-action@v0.0.3
         with:
           args: 'build test_img --builder paketobuildpacks/builder:full'
 ```
@@ -51,7 +51,7 @@ on your local machine.
       - name: Set App Name
         run: 'echo "::set-env name=IMG_NAME::$(echo ${USERNAME})/$(echo ${IMG_NAME})"'
       - name: Pack Remote Build
-        uses: ./
+        uses: dfreilich/pack-action@v0.0.3
         with:
           args: 'build ${{ env.IMG_NAME }} --builder paketobuildpacks/builder:full --publish'
           username: ${{ env.USERNAME }}
@@ -72,7 +72,7 @@ If you are publishing to a registry that is not Docker Hub, you can also add in 
       - name: Set App Name
         run: 'echo "::set-env name=IMG_NAME::$(echo ${REGISTRY})/$(echo ${USERNAME})/$(echo ${IMG_NAME})"'
       - name: Pack Remote Build
-        uses: ./
+        uses: dfreilich/pack-action@v0.0.3
         with:
           args: 'build ${{ env.IMG_NAME }} --builder ${{ env.BUILDER }} --publish'
           username: ${{ env.USERNAME }}
@@ -105,7 +105,7 @@ Alternatively (in cases where that doesn't work, such as ECR), users can login s
           username: ${{ env.USERNAME }}
           password: ${{ secrets.DOCKER_TOKEN }}
       - name: Pack Remote Build
-        uses: ./
+        uses: dfreilich/pack-action@v0.0.3
         with:
           args: 'build ${{ env.IMG_NAME }} --builder paketobuildpacks/builder:full --publish'
 ```
