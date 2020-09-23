@@ -10,15 +10,6 @@ env:
   REGISTRY: 'ghcr.io'
 
 jobs:
-  help:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Pack Help
-        uses: ./
-        with:
-          args: 'help'
   version:
     runs-on: ubuntu-latest
     steps:

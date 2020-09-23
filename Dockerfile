@@ -1,6 +1,6 @@
-FROM docker:stable-dind
+FROM buildpacksio/pack
 
-COPY --from=buildpacksio/pack /usr/local/bin/pack /usr/local/bin/pack
+COPY --from=docker:stable /usr/local/bin/docker /usr/local/bin/docker
 COPY entrypoint.sh /entrypoint.sh
 
 ENTRYPOINT ["/entrypoint.sh"]
