@@ -16,7 +16,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Pack Version
-        uses: ./
+        uses: dfreilich/pack-action@main
         with:
           args: 'version'
   local_build:
