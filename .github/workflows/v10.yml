@@ -50,7 +50,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Set App Name
-        run: 'echo "::set-env name=IMG_NAME::$(echo ${USERNAME})/$(echo ${IMG_NAME})"'
+        run: 'echo "IMG_NAME=$(echo ${USERNAME})/$(echo ${IMG_NAME})" >> $GITHUB_ENV'
       - name: Pack Remote Build
         uses: dfreilich/pack-action@v1.0
         with:
@@ -78,7 +78,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Set App Name
-        run: 'echo "::set-env name=IMG_NAME::$(echo ${REGISTRY})/$(echo ${USERNAME})/$(echo ${IMG_NAME})"'
+        run: 'echo "IMG_NAME=$(echo ${REGISTRY})/$(echo ${USERNAME})/$(echo ${IMG_NAME})" >> $GITHUB_ENV'
       - name: Pack Remote Build
         uses: dfreilich/pack-action@v1.0
         with:
