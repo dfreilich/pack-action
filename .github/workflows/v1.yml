@@ -1,4 +1,4 @@
-name: test/release-v1.0
+name: test/release-v1
 
 on:
   workflow_dispatch:
@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Pack Version
-        uses: dfreilich/pack-action@v1.0
+        uses: dfreilich/pack-action@v1
         with:
           args: 'version'
   local_build:
@@ -26,7 +26,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Pack Build
-        uses: dfreilich/pack-action@v1.0
+        uses: dfreilich/pack-action@v1
         with:
           args: 'build test_img --builder ${{ env.BUILDER }} --path ${{ env.TEST_APP_PATH }}'
       - name: Test App
@@ -34,11 +34,11 @@ jobs:
           docker run -d -p 8080:8080 --name testapp test_img
           curl localhost:8080
       - name: Pack Rebase
-        uses: dfreilich/pack-action@v1.0
+        uses: dfreilich/pack-action@v1
         with:
           args: 'rebase test_img'
       - name: Inspect Image
-        uses: dfreilich/pack-action@v1.0
+        uses: dfreilich/pack-action@v1
         with:
           args: 'inspect-image test_img'
       - name: Clean Up
@@ -52,7 +52,7 @@ jobs:
       - name: Set App Name
         run: 'echo "IMG_NAME=$(echo ${USERNAME})/$(echo ${IMG_NAME})" >> $GITHUB_ENV'
       - name: Pack Remote Build
-        uses: dfreilich/pack-action@v1.0
+        uses: dfreilich/pack-action@v1
         with:
           args: 'build ${{ env.IMG_NAME }} --builder ${{ env.BUILDER }} --path ${{ env.TEST_APP_PATH }} --publish'
           username: ${{ env.USERNAME }}
@@ -62,11 +62,11 @@ jobs:
           docker run -d -p 8080:8080 --name testapp ${{ env.IMG_NAME }}
           curl localhost:8080
       - name: Pack Rebase
-        uses: dfreilich/pack-action@v1.0
+        uses: dfreilich/pack-action@v1
         with:
           args: 'rebase ${{ env.IMG_NAME }}'
       - name: Inspect Image
-        uses: dfreilich/pack-action@v1.0
+        uses: dfreilich/pack-action@v1
         with:
           args: 'inspect-image ${{ env.IMG_NAME }}'
       - name: Clean Up
@@ -80,7 +80,7 @@ jobs:
       - name: Set App Name
         run: 'echo "IMG_NAME=$(echo ${REGISTRY})/$(echo ${USERNAME})/$(echo ${IMG_NAME})" >> $GITHUB_ENV'
       - name: Pack Remote Build
-        uses: dfreilich/pack-action@v1.0
+        uses: dfreilich/pack-action@v1
         with:
           args: 'build ${{ env.IMG_NAME }} --builder ${{ env.BUILDER }} --path ${{ env.TEST_APP_PATH }} --publish'
           username: ${{ env.USERNAME }}
@@ -92,14 +92,14 @@ jobs:
           docker run -d -p 8080:8080 --name testapp ${{ env.IMG_NAME }}
           curl localhost:8080
       - name: Pack Rebase
-        uses: dfreilich/pack-action@v1.0
+        uses: dfreilich/pack-action@v1
         with:
           args: 'rebase ${{ env.IMG_NAME }}'
           username: ${{ env.USERNAME }}
           password: ${{ secrets.GH_PACKAGES_PAT }}
           registry: ${{ env.REGISTRY }}
       - name: Inspect Image
-        uses: dfreilich/pack-action@v1.0
+        uses: dfreilich/pack-action@v1
         with:
           args: 'inspect-image ${{ env.IMG_NAME }}'
           username: ${{ env.USERNAME }}
@@ -116,7 +116,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Pack Local Build
-        uses: dfreilich/pack-action@v1.0
+        uses: dfreilich/pack-action@v1
         with:
           args: 'build ${{ env.IMG_NAME }} --builder ${{ env.BUILDER }} --path ${{ env.TEST_APP_PATH }}'
           username: ${{ env.USERNAME }}
@@ -127,11 +127,11 @@ jobs:
           docker run -d -p 8080:8080 --name testapp ${{ env.IMG_NAME }}
           curl localhost:8080
       - name: Pack Rebase
-        uses: dfreilich/pack-action@v1.0
+        uses: dfreilich/pack-action@v1
         with:
           args: 'rebase ${{ env.IMG_NAME }}'
       - name: Inspect Image
-        uses: dfreilich/pack-action@v1.0
+        uses: dfreilich/pack-action@v1
         with:
           args: 'inspect-image ${{ env.IMG_NAME }}'
       - name: Clean Up
