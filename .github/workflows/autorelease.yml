@@ -35,12 +35,13 @@ jobs:
         run: |
           v=${{ steps.version.outputs.result }}
           bump=$(echo "${v%.*}.$((${v##*.}+1))")
-          major=$(echo "${v%.*.*}")
+          major=$(echo "${v%.*}")
+          echo $bump
+          echo $major
           echo "ACTION_TAG=v${bump}" >> $GITHUB_ENV
           echo "MAJOR_TAG=v${major}" >> $GITHUB_ENV
       - name: Release
         uses: softprops/action-gh-release@v1
-        if: startsWith(github.ref, 'refs/tags/')
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           tag_name: ${{ env.ACTION_TAG }}
@@ -52,4 +53,4 @@ jobs:
       - name: Update major tag
         run: |
           git tag ${{ env.MAJOR_TAG }}
-          git push origin ${{ env.MAJOR_TAG }}
+          git push -f origin ${{ env.MAJOR_TAG }}
