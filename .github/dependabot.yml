@@ -4,8 +4,14 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
+    labels:
+      - automerge
+      - type:dependency-upgrade
 
   - package-ecosystem: "docker"
     directory: "/"
     schedule:
       interval: "daily"
+    labels:
+      - automerge
+      - type:dependency-upgrade
