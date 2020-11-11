@@ -3,14 +3,12 @@ name: autorelease
 on:
   workflow_run:
     workflows: ["automerge"]
-    branches: [main]
     types:
       - completed
   workflow_dispatch:
     inputs:
       tag_name:
-        description: The release tag to distribute
-        required: true
+        description: The release tag to distribute. If empty, it will bump the latest version.
 
 jobs:
   release-and-tag:
