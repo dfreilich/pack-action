@@ -35,7 +35,9 @@ jobs:
         run: |
           v=${{ steps.version.outputs.result }}
           bump=$(echo "${v%.*}.$((${v##*.}+1))")
+          echo $bump
           major=$(echo "${v%.*.*}")
+          echo $major
           echo "ACTION_TAG=v${bump}" >> $GITHUB_ENV
           echo "MAJOR_TAG=v${major}" >> $GITHUB_ENV
       - name: Release
@@ -50,6 +52,7 @@ jobs:
             documentation, check out the v1.0 release notes [here](https://github.com/dfreilich/pack-action/releases/tag/v1.0)
             or the documentation [here](https://github.com/dfreilich/pack-action#usage)
       - name: Update major tag
+        if: startsWith(github.ref, 'refs/tags/')
         run: |
           git tag ${{ env.MAJOR_TAG }}
           git push origin ${{ env.MAJOR_TAG }}
