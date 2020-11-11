@@ -35,8 +35,8 @@ jobs:
         run: |
           v=${{ steps.version.outputs.result }}
           bump=$(echo "${v%.*}.$((${v##*.}+1))")
+          major=$(echo "${v%.*}")
           echo $bump
-          major=$(echo "${v%.*.*}")
           echo $major
           echo "ACTION_TAG=v${bump}" >> $GITHUB_ENV
           echo "MAJOR_TAG=v${major}" >> $GITHUB_ENV
