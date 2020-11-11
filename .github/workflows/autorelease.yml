@@ -1,4 +1,4 @@
-name: release
+name: autorelease
 
 on:
   workflow_run:
@@ -24,8 +24,7 @@ jobs:
           result-encoding: string
           script: |
             let tag = (context.payload.inputs && context.payload.inputs.tag_name)
-              || await github.repos.getLatestRelease({owner: context.repo.owner,repo: context.repo.repo})
-                .then((data) => return data.data.name)
+              || (await github.repos.getLatestRelease({owner: context.repo.owner,repo: context.repo.repo})).data.data.name
 
             if (!tag) {
               throw "ERROR: unable to determine tag";
