@@ -3,14 +3,12 @@ name: autorelease
 on:
   workflow_run:
     workflows: ["automerge"]
-    branches: [main]
     types:
       - completed
   workflow_dispatch:
     inputs:
       tag_name:
-        description: The release tag to distribute
-        required: true
+        description: The release tag to distribute. If empty, it will bump the latest version.
 
 jobs:
   release-and-tag:
@@ -23,8 +21,9 @@ jobs:
         with:
           result-encoding: string
           script: |
+            console.log((await github.repos.getLatestRelease({owner: context.repo.owner,repo: context.repo.repo})).data);
             let tag = (context.payload.inputs && context.payload.inputs.tag_name)
-              || (await github.repos.getLatestRelease({owner: context.repo.owner,repo: context.repo.repo})).data.data.name
+              || (await github.repos.getLatestRelease({owner: context.repo.owner,repo: context.repo.repo})).data.name;
 
             if (!tag) {
               throw "ERROR: unable to determine tag";
