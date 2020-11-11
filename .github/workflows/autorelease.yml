@@ -21,8 +21,9 @@ jobs:
         with:
           result-encoding: string
           script: |
+            console.log((await github.repos.getLatestRelease({owner: context.repo.owner,repo: context.repo.repo})).data);
             let tag = (context.payload.inputs && context.payload.inputs.tag_name)
-              || (await github.repos.getLatestRelease({owner: context.repo.owner,repo: context.repo.repo})).data.data.name
+              || (await github.repos.getLatestRelease({owner: context.repo.owner,repo: context.repo.repo})).data.data.name;
 
             if (!tag) {
               throw "ERROR: unable to determine tag";
