@@ -41,10 +41,12 @@ jobs:
           echo "ACTION_TAG=v${bump}" >> $GITHUB_ENV
           echo "MAJOR_TAG=v${major}" >> $GITHUB_ENV
       - name: Release
-        uses: softprops/action-gh-release@v1
+        uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
           tag_name: ${{ env.ACTION_TAG }}
+          release_name: ${{ env.ACTION_TAG }}
           body: |
             # pack-action ${{ env.ACTION_TAG }}
             This is an automated release of the Pack Action, incorporating a dependency update. For detailed usage
