@@ -1,4 +1,4 @@
-FROM buildpacksio/pack:0.15.0
+FROM buildpacksio/pack:0.15.1
 
 COPY --from=busybox:latest /bin/sh /bin/sh
 COPY --from=docker:stable /usr/local/bin/docker /usr/local/bin/docker
