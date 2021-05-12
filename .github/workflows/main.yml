@@ -16,7 +16,7 @@ jobs:
   version:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v2.3.4
       - name: Pack Version
         uses: ./
         with:
@@ -24,7 +24,7 @@ jobs:
   local_build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v2.3.4
       - name: Pack Build
         uses: ./
         with:
@@ -47,7 +47,7 @@ jobs:
   dockerhub_remote_build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v2.3.4
       - name: Set App Name
         run: 'echo "IMG_NAME=$(echo ${USERNAME})/$(echo ${IMG_NAME})" >> $GITHUB_ENV'
       - name: Pack Remote Build
@@ -74,7 +74,7 @@ jobs:
   github_registry_remote_build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v2.3.4
       - name: Set App Name
         run: 'echo "IMG_NAME=$(echo ${REGISTRY})/$(echo ${USERNAME})/$(echo ${IMG_NAME})" >> $GITHUB_ENV'
       - name: Pack Remote Build
@@ -111,7 +111,7 @@ jobs:
     env:
       BUILDER: 'ghcr.io/dfreilich/paketobuildpacks/builder:tiny'
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v2.3.4
       - name: Pack Local Build
         uses: ./
         with:
