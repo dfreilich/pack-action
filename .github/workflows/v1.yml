@@ -9,7 +9,7 @@ on:
     - cron: '0 0 * * *'
 
 env:
-  TEST_APP_PATH: "/github/workspace/.github/workflows/test-app"
+  TEST_APP_PATH: ".github/workflows/test-app"
   BUILDER: "paketobuildpacks/builder:tiny"
   IMG_NAME: 'pack_action_test_img'
   USERNAME: 'dfreilich'
