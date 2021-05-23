@@ -87,11 +87,11 @@ jobs:
         with:
           args: 'build ${{ env.IMG_NAME }} --builder ${{ env.BUILDER }} --path ${{ env.TEST_APP_PATH }} --publish'
           username: ${{ env.USERNAME }}
-          password: ${{ secrets.GH_PACKAGES_PAT }}
+          password: ${{ secrets.GITHUB_TOKEN }}
           registry: ${{ env.REGISTRY }}
       - name: Test App
         run: |
-          echo ${{ secrets.GH_PACKAGES_PAT }} | docker login -u ${{ env.USERNAME }} --password-stdin ${{ env.REGISTRY }}
+          echo ${{ secrets.GITHUB_TOKEN }} | docker login -u ${{ env.USERNAME }} --password-stdin ${{ env.REGISTRY }}
           docker run -d -p 8080:8080 --name testapp ${{ env.IMG_NAME }}
           curl localhost:8080
       - name: Pack Rebase
@@ -99,14 +99,14 @@ jobs:
         with:
           args: 'rebase ${{ env.IMG_NAME }}'
           username: ${{ env.USERNAME }}
-          password: ${{ secrets.GH_PACKAGES_PAT }}
+          password: ${{ secrets.GITHUB_TOKEN }}
           registry: ${{ env.REGISTRY }}
       - name: Inspect Image
         uses: dfreilich/pack-action@v1
         with:
           args: 'inspect-image ${{ env.IMG_NAME }}'
           username: ${{ env.USERNAME }}
-          password: ${{ secrets.GH_PACKAGES_PAT }}
+          password: ${{ secrets.GITHUB_TOKEN }}
           registry: ${{ env.REGISTRY }}
       - name: Clean Up
         run: |
@@ -123,7 +123,7 @@ jobs:
         with:
           args: 'build ${{ env.IMG_NAME }} --builder ${{ env.BUILDER }} --path ${{ env.TEST_APP_PATH }}'
           username: ${{ env.USERNAME }}
-          password: ${{ secrets.GH_PACKAGES_PAT }}
+          password: ${{ secrets.GITHUB_TOKEN }}
           registry: ${{ env.REGISTRY }}
       - name: Test App
         run: |
