@@ -13,4 +13,6 @@ if [ -z "${pack_exe}" ]; then
   fi
 fi
 
+# mounted as bound volume to the root of the executing repository
+cd /github/workspace
 eval "${pack_exe} ${INPUT_ARGS}"
