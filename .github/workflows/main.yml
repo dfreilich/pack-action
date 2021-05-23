@@ -6,7 +6,7 @@ on:
       - main
 
 env:
-  TEST_APP_PATH: "test-app/"
+  TEST_APP_PATH: "/github/workspace/.github/workflows/test-app/"
   BUILDER: "paketobuildpacks/builder:tiny"
   IMG_NAME: 'pack_action_test_img'
   USERNAME: 'dfreilich'
@@ -28,7 +28,7 @@ jobs:
       - name: Pack Build
         uses: ./
         with:
-          args: 'build test_img --builder ${{ env.BUILDER }} --path ${{ env.TEST_APP_PATH }}'
+          args: 'build test_img --builder ${{ env.BUILDER }}'
       - name: Test App
         run: |
           docker run -d -p 8080:8080 --name testapp test_img
