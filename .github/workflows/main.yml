@@ -32,6 +32,8 @@ jobs:
       - name: Test App
         run: |
           docker run -d -p 8080:8080 --name testapp test_img
+          curl --version
+          sleep 30s
           curl --request GET --url http://localhost:8080
       - name: Pack Rebase
         uses: ./
@@ -59,6 +61,7 @@ jobs:
       - name: Test App
         run: |
           docker run -d -p 8080:8080 --name testapp ${{ env.IMG_NAME }}
+          sleep 30s
           curl --request GET --url http://localhost:8080
       - name: Pack Rebase
         uses: ./
@@ -88,6 +91,7 @@ jobs:
         run: |
           echo ${{ secrets.GITHUB_TOKEN }} | docker login -u ${{ env.USERNAME }} --password-stdin ${{ env.REGISTRY }}
           docker run -d -p 8080:8080 --name testapp ${{ env.IMG_NAME }}
+          sleep 30s
           curl --request GET --url http://localhost:8080
       - name: Pack Rebase
         uses: ./
@@ -122,6 +126,7 @@ jobs:
       - name: Test App
         run: |
           docker run -d -p 8080:8080 --name testapp ${{ env.IMG_NAME }}
+          sleep 30s
           curl --request GET --url http://localhost:8080
       - name: Pack Rebase
         uses: ./
