@@ -28,7 +28,7 @@ jobs:
       - name: Pack Build
         uses: ./
         with:
-          args: 'build test_img --builder ${{ env.BUILDER }} --path .'
+          args: 'build test_img --builder ${{ env.BUILDER }}'
       - name: Test App
         run: |
           docker run -d -p 8080:8080 --name testapp test_img
