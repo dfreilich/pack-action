@@ -13,4 +13,8 @@ if [ -z "${pack_exe}" ]; then
   fi
 fi
 
+# mounted as bound volume to the root of the executing repository
+echo "PACK PATH: ${pack_exe}"
+cp ${pack_exe} "/github/workspace"
+ls -lah /github/workspace
 eval "${pack_exe} ${INPUT_ARGS}"
