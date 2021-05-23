@@ -32,7 +32,9 @@ jobs:
       - name: Test App
         run: |
           docker run -d -p 8080:8080 --name testapp test_img
-          curl localhost:8080
+          curl --version
+          sleep 30s
+          curl --request GET --url http://localhost:8080
       - name: Pack Rebase
         uses: ./
         with:
@@ -59,7 +61,8 @@ jobs:
       - name: Test App
         run: |
           docker run -d -p 8080:8080 --name testapp ${{ env.IMG_NAME }}
-          curl localhost:8080
+          sleep 30s
+          curl --request GET --url http://localhost:8080
       - name: Pack Rebase
         uses: ./
         with:
@@ -88,7 +91,8 @@ jobs:
         run: |
           echo ${{ secrets.GH_PACKAGES_PAT }} | docker login -u ${{ env.USERNAME }} --password-stdin ${{ env.REGISTRY }}
           docker run -d -p 8080:8080 --name testapp ${{ env.IMG_NAME }}
-          curl localhost:8080
+          sleep 30s
+          curl --request GET --url http://localhost:8080
       - name: Pack Rebase
         uses: ./
         with:
@@ -122,7 +126,8 @@ jobs:
       - name: Test App
         run: |
           docker run -d -p 8080:8080 --name testapp ${{ env.IMG_NAME }}
-          curl localhost:8080
+          sleep 30s
+          curl --request GET --url http://localhost:8080
       - name: Pack Rebase
         uses: ./
         with:
