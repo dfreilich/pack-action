@@ -95,7 +95,6 @@ jobs:
           args: 'build ${{ env.IMG_NAME }} --builder ${{ env.BUILDER }} --path ${{ env.TEST_APP_PATH }} --publish'
       - name: Test App
         run: |
-          echo ${{ secrets.GH_PACKAGES_PAT }} | docker login -u ${{ env.USERNAME }} --password-stdin ${{ env.REGISTRY }}
           docker run -d -p 8080:8080 --name testapp ${{ env.IMG_NAME }}
           sleep 30s
           curl --request GET --url http://localhost:8080
@@ -103,16 +102,10 @@ jobs:
         uses: ./
         with:
           args: 'rebase ${{ env.IMG_NAME }}'
-          username: ${{ env.USERNAME }}
-          password: ${{ secrets.GH_PACKAGES_PAT }}
-          registry: ${{ env.REGISTRY }}
       - name: Inspect Image
         uses: ./
         with:
           args: 'inspect-image ${{ env.IMG_NAME }}'
-          username: ${{ env.USERNAME }}
-          password: ${{ secrets.GH_PACKAGES_PAT }}
-          registry: ${{ env.REGISTRY }}
       - name: Clean Up
         run: |
           docker container stop testapp
