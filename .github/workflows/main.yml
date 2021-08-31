@@ -46,96 +46,96 @@ jobs:
       - name: Clean Up
         run: |
           docker container stop testapp
-#  dockerhub_remote_build:
-#    runs-on: ubuntu-latest
-#    steps:
-#      - uses: actions/checkout@v2
-#      - name: Set App Name
-#        run: 'echo "IMG_NAME=$(echo ${USERNAME})/$(echo ${IMG_NAME})" >> $GITHUB_ENV'
-#      - name: Pack Remote Build
-#        uses: ./
-#        with:
-#          args: 'build ${{ env.IMG_NAME }} --builder ${{ env.BUILDER }} --path ${{ env.TEST_APP_PATH }} --publish'
-#          username: ${{ env.USERNAME }}
-#          password: ${{ secrets.DOCKER_TOKEN }}
-#      - name: Test App
-#        run: |
-#          docker run -d -p 8080:8080 --name testapp ${{ env.IMG_NAME }}
-#          sleep 30s
-#          curl --request GET --url http://localhost:8080
-#      - name: Pack Rebase
-#        uses: ./
-#        with:
-#          args: 'rebase ${{ env.IMG_NAME }}'
-#      - name: Inspect Image
-#        uses: ./
-#        with:
-#          args: 'inspect-image ${{ env.IMG_NAME }}'
-#      - name: Clean Up
-#        run: |
-#          docker container stop testapp
-#  github_registry_remote_build:
-#    runs-on: ubuntu-latest
-#    steps:
-#      - uses: actions/checkout@v2
-#      - name: Set App Name
-#        run: 'echo "IMG_NAME=$(echo ${REGISTRY})/$(echo ${USERNAME})/$(echo ${IMG_NAME})" >> $GITHUB_ENV'
-#      - name: Pack Remote Build
-#        uses: ./
-#        with:
-#          args: 'build ${{ env.IMG_NAME }} --builder ${{ env.BUILDER }} --path ${{ env.TEST_APP_PATH }} --publish'
-#          username: ${{ env.USERNAME }}
-#          password: ${{ secrets.GH_PACKAGES_PAT }}
-#          registry: ${{ env.REGISTRY }}
-#      - name: Test App
-#        run: |
-#          echo ${{ secrets.GH_PACKAGES_PAT }} | docker login -u ${{ env.USERNAME }} --password-stdin ${{ env.REGISTRY }}
-#          docker run -d -p 8080:8080 --name testapp ${{ env.IMG_NAME }}
-#          sleep 30s
-#          curl --request GET --url http://localhost:8080
-#      - name: Pack Rebase
-#        uses: ./
-#        with:
-#          args: 'rebase ${{ env.IMG_NAME }}'
-#          username: ${{ env.USERNAME }}
-#          password: ${{ secrets.GH_PACKAGES_PAT }}
-#          registry: ${{ env.REGISTRY }}
-#      - name: Inspect Image
-#        uses: ./
-#        with:
-#          args: 'inspect-image ${{ env.IMG_NAME }}'
-#          username: ${{ env.USERNAME }}
-#          password: ${{ secrets.GH_PACKAGES_PAT }}
-#          registry: ${{ env.REGISTRY }}
-#      - name: Clean Up
-#        run: |
-#          docker container stop testapp
-#  local_with_secure_builder:
-#    runs-on: ubuntu-latest
-#    env:
-#      BUILDER: 'ghcr.io/dfreilich/paketobuildpacks/builder:tiny'
-#    steps:
-#      - uses: actions/checkout@v2
-#      - name: Pack Local Build
-#        uses: ./
-#        with:
-#          args: 'build ${{ env.IMG_NAME }} --builder ${{ env.BUILDER }} --path ${{ env.TEST_APP_PATH }}'
-#          username: ${{ env.USERNAME }}
-#          password: ${{ secrets.GH_PACKAGES_PAT }}
-#          registry: ${{ env.REGISTRY }}
-#      - name: Test App
-#        run: |
-#          docker run -d -p 8080:8080 --name testapp ${{ env.IMG_NAME }}
-#          sleep 30s
-#          curl --request GET --url http://localhost:8080
-#      - name: Pack Rebase
-#        uses: ./
-#        with:
-#          args: 'rebase ${{ env.IMG_NAME }}'
-#      - name: Inspect Image
-#        uses: ./
-#        with:
-#          args: 'inspect-image ${{ env.IMG_NAME }}'
-#      - name: Clean Up
-#        run: |
-#          docker container stop testapp
+  dockerhub_remote_build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set App Name
+        run: 'echo "IMG_NAME=$(echo ${USERNAME})/$(echo ${IMG_NAME})" >> $GITHUB_ENV'
+      - name: Pack Remote Build
+        uses: ./
+        with:
+          args: 'build ${{ env.IMG_NAME }} --builder ${{ env.BUILDER }} --path ${{ env.TEST_APP_PATH }} --publish'
+          username: ${{ env.USERNAME }}
+          password: ${{ secrets.DOCKER_TOKEN }}
+      - name: Test App
+        run: |
+          docker run -d -p 8080:8080 --name testapp ${{ env.IMG_NAME }}
+          sleep 30s
+          curl --request GET --url http://localhost:8080
+      - name: Pack Rebase
+        uses: ./
+        with:
+          args: 'rebase ${{ env.IMG_NAME }}'
+      - name: Inspect Image
+        uses: ./
+        with:
+          args: 'inspect-image ${{ env.IMG_NAME }}'
+      - name: Clean Up
+        run: |
+          docker container stop testapp
+  github_registry_remote_build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set App Name
+        run: 'echo "IMG_NAME=$(echo ${REGISTRY})/$(echo ${USERNAME})/$(echo ${IMG_NAME})" >> $GITHUB_ENV'
+      - name: Pack Remote Build
+        uses: ./
+        with:
+          args: 'build ${{ env.IMG_NAME }} --builder ${{ env.BUILDER }} --path ${{ env.TEST_APP_PATH }} --publish'
+          username: ${{ env.USERNAME }}
+          password: ${{ secrets.GH_PACKAGES_PAT }}
+          registry: ${{ env.REGISTRY }}
+      - name: Test App
+        run: |
+          echo ${{ secrets.GH_PACKAGES_PAT }} | docker login -u ${{ env.USERNAME }} --password-stdin ${{ env.REGISTRY }}
+          docker run -d -p 8080:8080 --name testapp ${{ env.IMG_NAME }}
+          sleep 30s
+          curl --request GET --url http://localhost:8080
+      - name: Pack Rebase
+        uses: ./
+        with:
+          args: 'rebase ${{ env.IMG_NAME }}'
+          username: ${{ env.USERNAME }}
+          password: ${{ secrets.GH_PACKAGES_PAT }}
+          registry: ${{ env.REGISTRY }}
+      - name: Inspect Image
+        uses: ./
+        with:
+          args: 'inspect-image ${{ env.IMG_NAME }}'
+          username: ${{ env.USERNAME }}
+          password: ${{ secrets.GH_PACKAGES_PAT }}
+          registry: ${{ env.REGISTRY }}
+      - name: Clean Up
+        run: |
+          docker container stop testapp
+  local_with_secure_builder:
+    runs-on: ubuntu-latest
+    env:
+      BUILDER: 'ghcr.io/dfreilich/paketobuildpacks/builder:tiny'
+    steps:
+      - uses: actions/checkout@v2
+      - name: Pack Local Build
+        uses: ./
+        with:
+          args: 'build ${{ env.IMG_NAME }} --builder ${{ env.BUILDER }} --path ${{ env.TEST_APP_PATH }}'
+          username: ${{ env.USERNAME }}
+          password: ${{ secrets.GH_PACKAGES_PAT }}
+          registry: ${{ env.REGISTRY }}
+      - name: Test App
+        run: |
+          docker run -d -p 8080:8080 --name testapp ${{ env.IMG_NAME }}
+          sleep 30s
+          curl --request GET --url http://localhost:8080
+      - name: Pack Rebase
+        uses: ./
+        with:
+          args: 'rebase ${{ env.IMG_NAME }}'
+      - name: Inspect Image
+        uses: ./
+        with:
+          args: 'inspect-image ${{ env.IMG_NAME }}'
+      - name: Clean Up
+        run: |
+          docker container stop testapp

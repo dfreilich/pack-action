@@ -31,6 +31,12 @@ runs:
         rm "${HOME}"/bin/jq
         rm "${HOME}"/bin/crane
         rm "${HOME}"/bin/yj
+    - id: login
+      shell: bash
+      run: |
+        if [ -n "${INPUT_USERNAME}" ] && [ -n "${INPUT_PASSWORD}" ]; then
+          echo "${INPUT_PASSWORD}" | docker login -u "${INPUT_USERNAME}" --password-stdin "${INPUT_REGISTRY}"
+        fi
     - id: run-pack
       shell: bash
       run: |
