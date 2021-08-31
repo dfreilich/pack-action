@@ -18,10 +18,17 @@ inputs:
     required: false
 
 runs:
-  using: 'docker'
-  image: 'Dockerfile'
-  args:
-    - ${{ inputs.args }}
-    - ${{ inputs.username }}
-    - ${{ inputs.password }}
-    - ${{ inputs.registry }}
+  using: "composite"
+  steps:
+    - id: install
+      uses: buildpacks/github-actions/setup-pack@v4.1.0
+    - id: cleanup
+      shell: bash
+      run: |
+        rm "${HOME}"/bin/jq
+        rm "${HOME}"/bin/crane
+        rm "${HOME}"/bin/yj
+    - id: run-pack
+      shell: bash
+      run: |
+        pack ${{ inputs.args }}
