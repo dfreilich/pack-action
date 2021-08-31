@@ -31,12 +31,6 @@ runs:
         rm "${HOME}"/bin/jq
         rm "${HOME}"/bin/crane
         rm "${HOME}"/bin/yj
-    - id: login
-      uses: docker/login-action@v1
-      with:
-        registry: ${{ inputs.registry }}
-        username: ${{ inputs.username }}
-        password: ${{ inputs.password }}
     - id: run-pack
       shell: bash
       run: |
