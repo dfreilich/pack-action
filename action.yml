@@ -7,6 +7,9 @@ branding:
   icon: layers   # from https://feathericons.com/
 
 inputs:
+  args:
+    description: Arguments for pack
+    required: true
   username:
     description: Username used to log in to a Docker registry. If not set, then no login will occur
     required: false
