@@ -1,13 +1,14 @@
 name: autorelease
 
 on:
-  workflow_run:
-    workflows: ["automerge"]
-    types:
-      - completed
+#  workflow_run:
+#    workflows: ["automerge"]
+#    types:
+#      - completed
   workflow_dispatch:
     inputs:
       tag_name:
+        required: false
         description: The release tag to distribute. If empty, it will bump the latest version.
 
 jobs:
@@ -21,7 +22,6 @@ jobs:
         with:
           result-encoding: string
           script: |
-            console.log((await github.repos.getLatestRelease({owner: context.repo.owner,repo: context.repo.repo})).data);
             let tag = (context.payload.inputs && context.payload.inputs.tag_name)
               || (await github.repos.getLatestRelease({owner: context.repo.owner,repo: context.repo.repo})).data.name;
 

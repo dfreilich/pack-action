@@ -7,21 +7,22 @@ branding:
   icon: layers   # from https://feathericons.com/
 
 inputs:
-  username:
-    description: Username used to log in to a Docker registry. If not set, then no login will occur
-    required: false
-  password:
-    description: Password or personal access token used to log in to a Docker registry. If not set, then no login will occur
-    required: false
-  registry:
-    description: Server address of Docker registry. If not set then will default to Docker Hub
-    required: false
+  args:
+    description: Arguments for pack
+    required: true
 
 runs:
-  using: 'docker'
-  image: 'Dockerfile'
-  args:
-    - ${{ inputs.args }}
-    - ${{ inputs.username }}
-    - ${{ inputs.password }}
-    - ${{ inputs.registry }}
+  using: "composite"
+  steps:
+    - id: install
+      uses: buildpacks/github-actions/setup-pack@v4.1.0
+    - id: cleanup
+      shell: bash
+      run: |
+        rm "${HOME}"/bin/jq
+        rm "${HOME}"/bin/crane
+        rm "${HOME}"/bin/yj
+    - id: run-pack
+      shell: bash
+      run: |
+        pack ${{ inputs.args }}
