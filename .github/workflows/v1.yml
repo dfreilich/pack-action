@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Pack Version
-        uses: dfreilich/pack-action@v1
+        uses: dfreilich/pack-action@v2.0
         with:
           args: 'version'
   local_build:
@@ -29,7 +29,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Pack Build
-        uses: dfreilich/pack-action@v1
+        uses: dfreilich/pack-action@v2.0
         with:
           args: 'build test_img --builder ${{ env.BUILDER }} --path ${{ env.TEST_APP_PATH }}'
       - name: Test App
@@ -39,11 +39,11 @@ jobs:
           sleep 30s
           curl --request GET --url http://localhost:8080
       - name: Pack Rebase
-        uses: dfreilich/pack-action@v1
+        uses: dfreilich/pack-action@v2.0
         with:
           args: 'rebase test_img'
       - name: Inspect Image
-        uses: dfreilich/pack-action@v1
+        uses: dfreilich/pack-action@v2.0
         with:
           args: 'inspect-image test_img'
       - name: Clean Up
@@ -62,7 +62,7 @@ jobs:
           username: ${{ env.USERNAME }}
           password: ${{ secrets.DOCKER_TOKEN }}
       - name: Pack Remote Build
-        uses: dfreilich/pack-action@v1
+        uses: dfreilich/pack-action@v2.0
         with:
           args: 'build ${{ env.IMG_NAME }} --builder ${{ env.BUILDER }} --path ${{ env.TEST_APP_PATH }} --publish'
       - name: Test App
@@ -71,11 +71,11 @@ jobs:
           sleep 30s
           curl --request GET --url http://localhost:8080
       - name: Pack Rebase
-        uses: dfreilich/pack-action@v1
+        uses: dfreilich/pack-action@v2.0
         with:
           args: 'rebase ${{ env.IMG_NAME }}'
       - name: Inspect Image
-        uses: dfreilich/pack-action@v1
+        uses: dfreilich/pack-action@v2.0
         with:
           args: 'inspect-image ${{ env.IMG_NAME }}'
       - name: Clean Up
@@ -95,7 +95,7 @@ jobs:
           password: ${{ secrets.GH_PACKAGES_PAT }}
           registry: ${{ env.REGISTRY }}
       - name: Pack Remote Build
-        uses: dfreilich/pack-action@v1
+        uses: dfreilich/pack-action@v2.0
         with:
           args: 'build ${{ env.IMG_NAME }} --builder ${{ env.BUILDER }} --path ${{ env.TEST_APP_PATH }} --publish'
       - name: Test App
@@ -104,11 +104,11 @@ jobs:
           sleep 30s
           curl --request GET --url http://localhost:8080
       - name: Pack Rebase
-        uses: dfreilich/pack-action@v1
+        uses: dfreilich/pack-action@v2.0
         with:
           args: 'rebase ${{ env.IMG_NAME }}'
       - name: Inspect Image
-        uses: dfreilich/pack-action@v1
+        uses: dfreilich/pack-action@v2.0
         with:
           args: 'inspect-image ${{ env.IMG_NAME }}'
       - name: Clean Up
@@ -128,7 +128,7 @@ jobs:
           password: ${{ secrets.GH_PACKAGES_PAT }}
           registry: ${{ env.REGISTRY }}
       - name: Pack Local Build
-        uses: dfreilich/pack-action@v1
+        uses: dfreilich/pack-action@v2.0
         with:
           args: 'build ${{ env.IMG_NAME }} --builder ${{ env.BUILDER }} --path ${{ env.TEST_APP_PATH }}'
       - name: Test App
@@ -137,11 +137,11 @@ jobs:
           sleep 30s
           curl --request GET --url http://localhost:8080
       - name: Pack Rebase
-        uses: dfreilich/pack-action@v1
+        uses: dfreilich/pack-action@v2.0
         with:
           args: 'rebase ${{ env.IMG_NAME }}'
       - name: Inspect Image
-        uses: dfreilich/pack-action@v1
+        uses: dfreilich/pack-action@v2.0
         with:
           args: 'inspect-image ${{ env.IMG_NAME }}'
       - name: Clean Up
