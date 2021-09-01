@@ -3,7 +3,9 @@
 # Pack Github Action
 This Github Action uses the [Pack CLI](https://github.com/buildpacks/pack) (a product of the [Cloud Native Buildpacks project](https://buildpacks.io)) to build applications and associated artifacts, without a Dockerfile. For more about pack concepts, see the [pack docs](https://buildpacks.io/docs). For `pack` usage specific documentation, see the [Pack CLI docs](https://buildpacks.io/docs/reference/pack/pack/).
 
-> In V2, login is no longer included in the action. Instead, users should use the [docker/login-action](https://github.com/docker/login-action) in another step beforehand, and this action should pick up those credentials
+> In v2, login is no longer included in the action. Instead, users should use the [docker/login-action](https://github.com/docker/login-action) in another step beforehand, and this action should pick up those credentials
+
+> In v2, you must use the direct path within the directory, without the `/github/workspace/` preface
 
 ## Usage
 ### Help
