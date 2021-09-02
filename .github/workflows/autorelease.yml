@@ -1,10 +1,10 @@
 name: autorelease
 
 on:
-#  workflow_run:
-#    workflows: ["automerge"]
-#    types:
-#      - completed
+  workflow_run:
+    workflows: ["automerge"]
+    types:
+      - completed
   workflow_dispatch:
     inputs:
       tag_name:
@@ -50,8 +50,7 @@ jobs:
           body: |
             # pack-action ${{ env.ACTION_TAG }}
             This is an automated release of the Pack Action, incorporating a dependency update. For detailed usage
-            documentation, check out the v1.0 release notes [here](https://github.com/dfreilich/pack-action/releases/tag/v1.0)
-            or the documentation [here](https://github.com/dfreilich/pack-action#usage)
+            documentation, check out the the documentation [here](https://github.com/dfreilich/pack-action#usage)
       - name: Update major tag
         run: |
           git tag ${{ env.MAJOR_TAG }}

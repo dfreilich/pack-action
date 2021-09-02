@@ -9,7 +9,7 @@ updates:
       - type:dependency-upgrade
 
   - package-ecosystem: "docker"
-    directory: "/"
+    directory: ".github/"
     schedule:
       interval: "daily"
     labels:
