@@ -17,7 +17,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: last-version
-        uses: actions/github-script@v4.0.2
+        uses: actions/github-script@v4.1.1
         id: version
         with:
           result-encoding: string
