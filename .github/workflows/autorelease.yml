@@ -1,10 +1,9 @@
 name: autorelease
 
 on:
-  workflow_run:
-    workflows: ["automerge"]
-    types:
-      - completed
+  push:
+    branches:
+      - main
   workflow_dispatch:
     inputs:
       tag_name:
