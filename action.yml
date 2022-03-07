@@ -32,4 +32,3 @@ runs:
       shell: bash
       run: |
         pack ${{ inputs.args }}
-
