@@ -16,8 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Pack Version
-        uses: ./
+      - uses: ./
         with:
           args: 'version'
   local_build:
