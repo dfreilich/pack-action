@@ -91,7 +91,7 @@ If you are publishing to a registry that is not Docker Hub, you can also add in 
 ```
 
 ### More Examples
-For more examples, see the [test workflows](.github/workflows/main2.yml).
+For more examples, see the [test workflows](.github/workflows/main.yml).
 
 ## Inputs
 ### `args`
