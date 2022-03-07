@@ -10,7 +10,7 @@ inputs:
   args:
     description: Arguments for pack
     required: true
-  version:
+  pack-version:
     description: Version of pack to use
     required: false
     default: '0.24.0'
@@ -21,7 +21,7 @@ runs:
     - id: install
       uses: buildpacks/github-actions/setup-pack@v4.6.0
       with:
-        pack-version: ${{ inputs.version }}
+        pack-version: ${{ inputs.pack-version }}
     - id: cleanup
       shell: bash
       run: |
