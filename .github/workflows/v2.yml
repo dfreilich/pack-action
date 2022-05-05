@@ -56,7 +56,7 @@ jobs:
       - name: Set App Name
         run: 'echo "IMG_NAME=$(echo ${USERNAME})/$(echo ${IMG_NAME})" >> $GITHUB_ENV'
       - name: login
-        uses: docker/login-action@v1
+        uses: docker/login-action@v2
         with:
           username: ${{ env.USERNAME }}
           password: ${{ secrets.DOCKER_TOKEN }}
@@ -87,7 +87,7 @@ jobs:
       - name: Set App Name
         run: 'echo "IMG_NAME=$(echo ${REGISTRY})/$(echo ${USERNAME})/$(echo ${IMG_NAME})" >> $GITHUB_ENV'
       - id: login
-        uses: docker/login-action@v1
+        uses: docker/login-action@v2
         with:
           username: ${{ env.USERNAME }}
           password: ${{ secrets.GH_PACKAGES_PAT }}
@@ -119,7 +119,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - id: login
-        uses: docker/login-action@v1
+        uses: docker/login-action@v2
         with:
           username: ${{ env.USERNAME }}
           password: ${{ secrets.GH_PACKAGES_PAT }}
