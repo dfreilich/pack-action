@@ -19,7 +19,7 @@ runs:
   using: "composite"
   steps:
     - id: install
-      uses: buildpacks/github-actions/setup-pack@v4.6.0
+      uses: buildpacks/github-actions/setup-pack@v5.0.1
       with:
         pack-version: ${{ inputs.version }}
     - id: cleanup
